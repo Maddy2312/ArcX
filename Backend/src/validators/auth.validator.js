@@ -17,3 +17,9 @@ export const registerValidator = [
     body('contact').trim().notEmpty().withMessage('Contact is required'),
     validate
 ];
+
+export const loginValidator = [
+    body('email').trim().notEmpty().withMessage('Email is required'),
+    body('password').trim().notEmpty().withMessage('Password is required'),
+    validate
+];
