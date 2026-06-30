@@ -1,24 +1,24 @@
-import { register } from "../services/auth.api.js";
+import { login, register } from "../services/auth.api.js";
 import { setUser, setLoading, setError } from "../state/auth.slice.js";
 import { useDispatch } from "react-redux";
 
 export const useAuth = () => {
   const dispatch = useDispatch();
-  const handleRegister = async (data) => {
+  const handleRegister = async (formData) => {
     try {
-      const response = await register(data);
-      dispatch(setUser(response.data));
-      return response.data;
+      const data = await register(formData);
+      dispatch(setUser(data.user));
+      return data;
     } catch (error) {
       throw error;
     }
   };
 
-  const handleLogin = async (data) => {
+  const handleLogin = async (formData) => {
     try {
-      const response = await login(data);
-      dispatch(setUser(response.data));
-      return response.data;
+      const data = await login(formData);
+      dispatch(setUser(data.user));
+      return data;
     } catch (error) {
       throw error;
     }

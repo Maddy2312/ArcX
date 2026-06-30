@@ -8,7 +8,7 @@ const authApiInstance = axios.create({
 export const register = async (data) => {
     try {
         const response = await authApiInstance.post("/register", data);
-        return response;
+        return response.data;
     } catch (error) {
         return error;
     }
@@ -17,7 +17,7 @@ export const register = async (data) => {
 export const login = async (data) => {
     try {
         const response = await authApiInstance.post("/login", data);
-        return response;
+        return response.data;
     } catch (error) {
         return error;
     }
