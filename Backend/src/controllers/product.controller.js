@@ -47,3 +47,20 @@ export const createProduct = async (req, res) => {
     });
   }
 };
+
+export const sellerProducts = async (req, res) => {
+    try {
+        const seller = req.user;
+        const products = await productModel.find({ seller: seller.id });
+        return res.status(200).json({
+            success: true,
+            products,
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
+}

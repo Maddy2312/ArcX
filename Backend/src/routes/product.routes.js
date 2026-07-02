@@ -2,7 +2,7 @@ import { Router } from "express";
 import { authenticateSeller } from "../middlewares/auth.middleware.js";
 import multer from "multer";
 import { ProductValidator } from "../validators/product.validator.js";
-import { createProduct } from "../controllers/product.controller.js";
+import { createProduct, sellerProducts } from "../controllers/product.controller.js";
 const storage = multer.memoryStorage();
 const upload = multer({
   storage: storage,
@@ -17,5 +17,6 @@ productRouter.post(
   ProductValidator,
   createProduct,
 );
+productRouter.get("/seller",authenticateSeller, sellerProducts)
 
 export default productRouter;
