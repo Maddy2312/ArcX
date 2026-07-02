@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react';
-import useProduct from '../hooks/useProduct.js';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from "react";
+import useProduct from "../hooks/useProduct.js";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 const SellerDashboard = () => {
   const { handleSellerProducts } = useProduct();
   const products = useSelector((state) => state.product.sellerProducts);
-
+  const navigate = useNavigate();
   useEffect(() => {
     handleSellerProducts();
   }, []);
 
   return (
     <div className="min-h-screen bg-gray-950 text-white p-6">
-      
       {/* Header */}
       <h1 className="text-2xl font-bold mb-6">Seller Dashboard</h1>
 
@@ -54,7 +54,10 @@ const SellerDashboard = () => {
               </div>
 
               {/* Button placeholder */}
-              <button className="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg transition">
+              <button
+                onClick={() => navigate(`/seller/product/${product._id}`)}
+                className="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg transition"
+              >
                 Manage Product
               </button>
             </div>

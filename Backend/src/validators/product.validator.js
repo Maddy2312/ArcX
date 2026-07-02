@@ -18,3 +18,10 @@ export const ProductValidator = [
     body("description").notEmpty().withMessage("Description is required"),
     validate
 ]
+
+export const VariantValidator = [
+    body("size").notEmpty().withMessage("Size is required"),
+    body("stock").notEmpty().withMessage("Stock is required"),
+    body("color").notEmpty().withMessage("Color is required"),
+    validate
+]

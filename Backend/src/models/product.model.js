@@ -64,6 +64,10 @@ const productSchema = new mongoose.Schema(
           required: true,
           min: 0,
         },
+        color: {
+          type: String,
+          required: true,
+        },
         images: [
           {
             url: {

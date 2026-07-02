@@ -22,3 +22,21 @@ export const sellerProductsApi = async () => {
         return error;
     }
 }
+
+export const productDetailsApi = async (id) => {
+    try {
+        const response = await productApiInstance.get(`/detail/${id}`);
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}
+
+export const addVariantsApi = async (id,data) => {
+    try {
+        const response = await productApiInstance.post(`/${id}/variants`,data);
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}

@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { createProductApi, sellerProductsApi } from "../services/product.api.js";
+import { addVariantsApi, createProductApi, productDetailsApi, sellerProductsApi } from "../services/product.api.js";
 import { setProducts, setSellerProducts } from "../state/product.slice.js";
 
 const useProduct = () => {
@@ -21,9 +21,28 @@ const useProduct = () => {
             throw error;
         }
     };
+    const handleProductDetails = async (id) => {
+        try {
+            const response = await productDetailsApi(id);
+            return response;
+        } catch (error) {
+            throw error;
+        }
+    };
+
+    const handleAddVariants = async (id,formData) => {
+        try {
+            const response = await addVariantsApi(id,formData);
+            return response;
+        } catch (error) {
+            throw error;
+        }
+    };
     return {
         handleCreateProduct,
-        handleSellerProducts
+        handleSellerProducts,
+        handleProductDetails,
+        handleAddVariants
     };
 };
 

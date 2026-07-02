@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { authenticateSeller } from "../middlewares/auth.middleware.js";
 import multer from "multer";
-import { ProductValidator } from "../validators/product.validator.js";
-import { createProduct, sellerProducts } from "../controllers/product.controller.js";
+import { ProductValidator, VariantValidator } from "../validators/product.validator.js";
+import { addVariants, createProduct, productDetails, sellerProducts } from "../controllers/product.controller.js";
 const storage = multer.memoryStorage();
 const upload = multer({
   storage: storage,
@@ -17,6 +17,8 @@ productRouter.post(
   ProductValidator,
   createProduct,
 );
-productRouter.get("/seller",authenticateSeller, sellerProducts)
+productRouter.get("/seller",authenticateSeller, sellerProducts);
+productRouter.get("/detail/:id", productDetails);
+productRouter.post("/:id/variants", authenticateSeller, upload.array('images', 10), VariantValidator, addVariants)
 
 export default productRouter;
