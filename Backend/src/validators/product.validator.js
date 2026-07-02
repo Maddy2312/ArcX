@@ -16,6 +16,5 @@ export const ProductValidator = [
     body("priceAmount").notEmpty().withMessage("PriceAmount is required"),
     body("priceCurrency").notEmpty().withMessage("PriceCurrency is required"),
     body("description").notEmpty().withMessage("Description is required"),
-    body("images").notEmpty().withMessage("Images are required"),
     validate
 ]
