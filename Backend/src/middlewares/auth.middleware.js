@@ -20,3 +20,25 @@ export const authenticateUser = async (req, res, next) => {
         res.status(500).json({ success: false, message: "Internal server error" });
     }
 }
+
+export const authenticateSeller = async (req, res, next) => {
+    try {
+        const token = req.cookies.token;
+        if (!token) {
+            return res.status(401).json({ success: false, message: "Unauthorized" });
+        }
+        const decoded = jwt.verify(token, config.JWT_SECRET);
+        const user = await userModel.findById(decoded.id);
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+        if (user.role !== "seller") {
+            return res.status(403).json({ success: false, message: "Forbidden" });
+        }
+        req.user = user;
+        next();
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+}
