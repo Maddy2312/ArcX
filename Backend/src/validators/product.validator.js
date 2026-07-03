@@ -26,3 +26,10 @@ export const VariantValidator = [
     body("color").notEmpty().withMessage("Color is required"),
     validate
 ]
+
+export const VariantSizeValidator = [
+    body("sizeOfShoe").notEmpty().withMessage("Size of Shoe is required"),
+    body("sizeStandard").isIn(["US", "UK", "EU"]).withMessage("Size Standard is required"),
+    body("stock").notEmpty().withMessage("Stock is required"),
+    validate
+]

@@ -4,6 +4,7 @@ import Login from "../features/auth/pages/Login.jsx";
 import CreateProduct from "../features/products/pages/CreateProduct.jsx";
 import SellerDashboard from "../features/products/pages/SellerDashboard.jsx";
 import SellerProductDetails from "../features/products/pages/SellerProductDetails.jsx";
+import EditVariant from "../features/products/pages/EditVariant.jsx";
 
 const routes = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const routes = createBrowserRouter([
       {
         path:"/seller/product/:id",
         element: <SellerProductDetails />,
+      },
+      {
+        path:"/seller/product/:id/variant/:variantId",
+        element: <EditVariant />,
       }
     ],
   },

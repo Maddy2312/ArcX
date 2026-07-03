@@ -40,3 +40,12 @@ export const addVariantsApi = async (id,data) => {
         return error;
     }
 }
+
+export const addVariantSizeApi = async (id,variantId,data) => {
+    try {
+        const response = await productApiInstance.post(`/${id}/variants/${variantId}/size`,data);
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}

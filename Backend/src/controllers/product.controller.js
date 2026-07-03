@@ -131,3 +131,42 @@ export const addVariants = async (req, res) => {
     });
   }
 };
+
+export const addVariantSize = async (req, res) => {
+  try {
+    const { id, variantId } = req.params;
+    console.log(id, variantId);
+    console.log(req.body)
+    const { sizeOfShoe, sizeStandard, stock } = req.body;
+    const product = await productModel.findOne({
+      _id: id,
+      seller: req.user.id,
+    });
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found",
+      });
+    }
+    const variant = product.variants.id(variantId);
+    if (!variant) {
+      return res.status(404).json({
+        success: false,
+        message: "Variant not found",
+      });
+    }
+    variant.size.push({ sizeOfShoe, sizeStandard, stock });
+    await product.save();
+    return res.status(200).json({
+      success: true,
+      message: "Variant size added successfully",
+      product,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}

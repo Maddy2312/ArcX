@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import useProduct from "../hooks/useProduct";
 
 const SellerProductDetails = () => {
   const { id } = useParams();
   const { handleProductDetails, handleAddVariants } = useProduct();
+  const navigate = useNavigate();
 
   const [product, setProduct] = useState(null);
 
@@ -102,6 +103,7 @@ const SellerProductDetails = () => {
 
                 return (
                   <div
+                  onClick={() => navigate(`/seller/product/${id}/variant/${v._id}`)}
                     key={v._id}
                     className="bg-gray-800 border border-gray-700 rounded-xl overflow-hidden"
                   >
