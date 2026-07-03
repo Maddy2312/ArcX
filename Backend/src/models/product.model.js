@@ -55,15 +55,24 @@ const productSchema = new mongoose.Schema(
 
     variants: [
       {
-        size: {
-          type: String,
-          required: true,
-        },
-        stock: {
-          type: Number,
-          required: true,
-          min: 0,
-        },
+        size: [
+          {
+            sizeOfShoe: {
+              type: Number,
+              required: true,
+            },
+            sizeStandard: {
+              type: String,
+              enum: ["US", "UK", "EU"],
+              default: "US",
+            },
+            stock: {
+              type: Number,
+              required: true,
+              min: 0,
+            },
+          },
+        ],
         color: {
           type: String,
           required: true,

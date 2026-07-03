@@ -91,7 +91,7 @@ export const productDetails = async (req, res) => {
 export const addVariants = async (req, res) => {
   try {
     const { id } = req.params;
-    const { size, color, stock } = req.body;
+    const { size, sizeStandard, stock, color } = req.body;
     const product = await productModel.findOne({
       _id: id,
       seller: req.user.id,
@@ -112,9 +112,8 @@ export const addVariants = async (req, res) => {
     );
 
     product.variants.push({
-      size,
+      size: { sizeOfShoe: size, sizeStandard, stock },
       color,
-      stock,
       images,
     });
     await product.save();

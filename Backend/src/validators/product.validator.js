@@ -21,6 +21,7 @@ export const ProductValidator = [
 
 export const VariantValidator = [
     body("size").notEmpty().withMessage("Size is required"),
+    body("sizeStandard").isIn(["US", "UK", "EU"]).withMessage("Size Standard is required"),
     body("stock").notEmpty().withMessage("Stock is required"),
     body("color").notEmpty().withMessage("Color is required"),
     validate
