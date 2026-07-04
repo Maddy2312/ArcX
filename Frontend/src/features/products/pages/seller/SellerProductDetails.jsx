@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import useProduct from "../hooks/useProduct";
+import useProduct from "../../hooks/useProduct";
 
 const SellerProductDetails = () => {
   const { id } = useParams();
@@ -66,7 +66,6 @@ const SellerProductDetails = () => {
   return (
     <div className="min-h-screen bg-gray-950 text-white p-6">
       <div className="max-w-6xl mx-auto space-y-6">
-
         {/* PRODUCT CARD */}
         <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
           <h1 className="text-2xl font-bold">{product.name}</h1>
@@ -103,7 +102,9 @@ const SellerProductDetails = () => {
 
                 return (
                   <div
-                  onClick={() => navigate(`/seller/product/${id}/variant/${v._id}`)}
+                    onClick={() =>
+                      navigate(`/seller/product/${id}/variant/${v._id}`)
+                    }
                     key={v._id}
                     className="bg-gray-800 border border-gray-700 rounded-xl overflow-hidden"
                   >
@@ -121,7 +122,6 @@ const SellerProductDetails = () => {
 
                     {/* info */}
                     <div className="p-4 space-y-2">
-
                       <div className="flex justify-between">
                         <span className="text-gray-400">Size</span>
                         <span className="font-semibold">
@@ -153,7 +153,6 @@ const SellerProductDetails = () => {
                           }}
                         />
                       </div>
-
                     </div>
                   </div>
                 );
@@ -167,7 +166,6 @@ const SellerProductDetails = () => {
           <h2 className="text-xl font-semibold mb-4">Add Variant</h2>
 
           <form onSubmit={handleSubmit} className="grid gap-3">
-
             <input
               type="number"
               className="bg-gray-800 p-3 rounded-lg"
@@ -211,10 +209,8 @@ const SellerProductDetails = () => {
             <button className="bg-indigo-600 hover:bg-indigo-700 p-3 rounded-lg">
               Add Variant
             </button>
-
           </form>
         </div>
-
       </div>
     </div>
   );

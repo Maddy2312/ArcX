@@ -49,3 +49,12 @@ export const addVariantSizeApi = async (id,variantId,data) => {
         return error;
     }
 }
+
+export const userProductsApi = async () => {
+    try {
+        const response = await productApiInstance.get("/user");
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}

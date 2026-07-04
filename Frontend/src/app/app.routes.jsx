@@ -1,15 +1,21 @@
 import { createBrowserRouter } from "react-router";
 import Register from "../features/auth/pages/Register.jsx";
 import Login from "../features/auth/pages/Login.jsx";
-import CreateProduct from "../features/products/pages/CreateProduct.jsx";
-import SellerDashboard from "../features/products/pages/SellerDashboard.jsx";
-import SellerProductDetails from "../features/products/pages/SellerProductDetails.jsx";
-import EditVariant from "../features/products/pages/EditVariant.jsx";
+import CreateProduct from "../features/products/pages/seller/CreateProduct.jsx";
+import SellerDashboard from "../features/products/pages/seller/SellerDashboard.jsx";
+import SellerProductDetails from "../features/products/pages/seller/SellerProductDetails.jsx";
+import EditVariant from "../features/products/pages/seller/EditVariant.jsx";
+import Home from "../features/products/pages/user/Home.jsx";
+import UserProductDetails from "../features/products/pages/user/UserProductDetails.jsx";
 
 const routes = createBrowserRouter([
   {
     path: "/",
-    element: <h1>Hello</h1>,
+    element: <Home />,
+  },
+  {
+    path: "/product/:id",
+    element: <UserProductDetails />,
   },
   {
     path: "/register",

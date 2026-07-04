@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import useProduct from "../hooks/useProduct";
+import useProduct from "../../hooks/useProduct";
 import { useNavigate } from "react-router";
 
 const CreateProduct = () => {
@@ -44,7 +44,7 @@ const CreateProduct = () => {
       });
 
       const result = await handleCreateProduct(data);
-      if(result.success){
+      if (result.success) {
         navigate("/");
       }
       setFormData({

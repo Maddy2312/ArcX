@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import useProduct from "../hooks/useProduct.js";
+import useProduct from "../../hooks/useProduct.js";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 

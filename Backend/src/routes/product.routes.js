@@ -12,6 +12,7 @@ import {
   createProduct,
   productDetails,
   sellerProducts,
+  userProducts,
 } from "../controllers/product.controller.js";
 const storage = multer.memoryStorage();
 const upload = multer({
@@ -27,8 +28,6 @@ productRouter.post(
   ProductValidator,
   createProduct,
 );
-productRouter.get("/seller", authenticateSeller, sellerProducts);
-productRouter.get("/detail/:id", productDetails);
 productRouter.post(
   "/:id/variants",
   authenticateSeller,
@@ -42,4 +41,7 @@ productRouter.post(
   VariantSizeValidator,
   addVariantSize,
 );
+productRouter.get("/seller", authenticateSeller, sellerProducts);
+productRouter.get("/user", userProducts)
+productRouter.get("/detail/:id", productDetails);
 export default productRouter;

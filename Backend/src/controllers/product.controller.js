@@ -170,3 +170,25 @@ export const addVariantSize = async (req, res) => {
     });
   }
 }
+
+export const userProducts = async (req, res) => {
+  try {
+    const products = await productModel.find();
+    if(!products){
+      return res.status(404).json({
+        success: false,
+        message: "Products not found",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}

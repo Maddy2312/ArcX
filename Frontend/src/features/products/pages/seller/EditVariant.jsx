@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import useProduct from "../hooks/useProduct";
+import useProduct from "../../hooks/useProduct";
 
 const EditVariant = () => {
   const { id, variantId } = useParams();
@@ -20,9 +20,7 @@ const EditVariant = () => {
   const fetchVariant = async () => {
     const res = await handleProductDetails(id);
 
-    const found = res.product.variants.find(
-      (v) => v._id === variantId
-    );
+    const found = res.product.variants.find((v) => v._id === variantId);
 
     setVariant(found);
   };
@@ -55,7 +53,6 @@ const EditVariant = () => {
   return (
     <div className="min-h-screen bg-gray-950 text-white p-6">
       <div className="max-w-3xl mx-auto space-y-6">
-
         {/* HEADER */}
         <div className="bg-gray-900 p-6 rounded-xl border border-gray-800">
           <h1 className="text-2xl font-bold">Edit Variant</h1>
@@ -83,9 +80,7 @@ const EditVariant = () => {
 
                   <span
                     className={`font-semibold ${
-                      s.stock > 5
-                        ? "text-green-400"
-                        : "text-red-400"
+                      s.stock > 5 ? "text-green-400" : "text-red-400"
                     }`}
                   >
                     {s.stock}
@@ -101,7 +96,6 @@ const EditVariant = () => {
           <h2 className="text-lg font-semibold mb-4">Add New Size</h2>
 
           <form onSubmit={handleSubmit} className="grid gap-3">
-
             <input
               type="number"
               className="bg-gray-800 p-3 rounded-lg outline-none"
@@ -131,10 +125,8 @@ const EditVariant = () => {
             <button className="bg-green-600 hover:bg-green-700 p-3 rounded-lg font-semibold">
               Add Size
             </button>
-
           </form>
         </div>
-
       </div>
     </div>
   );
