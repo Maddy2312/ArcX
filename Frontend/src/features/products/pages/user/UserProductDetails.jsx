@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import useProduct from "../../hooks/useProduct";
+import useCart from "../../../cart/hooks/useCart.js";
 import { ShoppingCart, Heart, Truck, ShieldCheck } from "lucide-react";
 
 const UserProductDetails = () => {
   const { id } = useParams();
   const { handleProductDetails } = useProduct();
+  const { handleAddToCart } = useCart();
+  const navigate = useNavigate();
 
   const [product, setProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(0);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedImage, setSelectedImage] = useState("");
-  const [quantity, setQuantity] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function getProductDetails() {
@@ -42,15 +45,39 @@ const UserProductDetails = () => {
 
   const variant = product.variants[selectedVariant];
 
+  // ✅ ADD TO CART FUNCTION
+ const addToCart = async () => {
+  try {
+    if (!selectedSize) {
+      alert("Please select a size");
+      return;
+    }
+
+    setLoading(true);
+
+    const result = await handleAddToCart(
+      product._id,
+      variant._id
+    );
+    if(result){
+      navigate('/cart');
+    }
+
+  } catch (error) {
+    alert(error?.response?.data?.message || "Failed to add to cart");
+  } finally {
+    setLoading(false);
+  }
+};
+
   return (
     <div className="bg-gray-100 min-h-screen py-10">
       <div className="max-w-7xl mx-auto bg-white rounded-3xl shadow-lg p-8">
 
         <div className="grid lg:grid-cols-2 gap-10">
 
-          {/* Images */}
+          {/* IMAGES */}
           <div>
-
             <div className="border rounded-2xl overflow-hidden">
               <img
                 src={selectedImage}
@@ -70,16 +97,13 @@ const UserProductDetails = () => {
                       ? "border-black"
                       : "border-gray-300"
                   }`}
-                  alt=""
                 />
               ))}
             </div>
-
           </div>
 
-          {/* Details */}
+          {/* DETAILS */}
           <div>
-
             <p className="text-gray-500 uppercase text-sm">
               {product.brand}
             </p>
@@ -100,16 +124,13 @@ const UserProductDetails = () => {
               {product.description}
             </p>
 
-            {/* Colors */}
-
+            {/* COLORS */}
             <div className="mt-8">
-
               <h3 className="font-semibold mb-3">
                 Select Color
               </h3>
 
               <div className="flex gap-3">
-
                 {product.variants.map((v, index) => (
                   <button
                     key={v._id}
@@ -127,21 +148,16 @@ const UserProductDetails = () => {
                     {v.color}
                   </button>
                 ))}
-
               </div>
-
             </div>
 
-            {/* Sizes */}
-
+            {/* SIZES */}
             <div className="mt-8">
-
               <h3 className="font-semibold mb-3">
                 Select Size
               </h3>
 
               <div className="flex flex-wrap gap-3">
-
                 {variant.size.map((size) => (
                   <button
                     key={size._id}
@@ -155,15 +171,11 @@ const UserProductDetails = () => {
                     {size.sizeStandard} {size.sizeOfShoe}
                   </button>
                 ))}
-
               </div>
-
             </div>
 
-            {/* Stock */}
-
+            {/* STOCK */}
             <div className="mt-6">
-
               <span
                 className={`font-semibold ${
                   selectedSize?.stock > 0
@@ -173,58 +185,31 @@ const UserProductDetails = () => {
               >
                 {selectedSize?.stock} in Stock
               </span>
-
             </div>
 
-            {/* Quantity */}
-
-            <div className="flex items-center gap-4 mt-8">
-
-              <button
-                onClick={() =>
-                  quantity > 1 && setQuantity(quantity - 1)
-                }
-                className="w-10 h-10 border rounded-lg"
-              >
-                -
-              </button>
-
-              <span className="text-xl">
-                {quantity}
-              </span>
-
-              <button
-                onClick={() => setQuantity(quantity + 1)}
-                className="w-10 h-10 border rounded-lg"
-              >
-                +
-              </button>
-
-            </div>
-
-            {/* Buttons */}
-
+            {/* BUTTONS */}
             <div className="flex gap-4 mt-10">
 
-              <button className="flex-1 bg-black text-white py-4 rounded-xl flex justify-center items-center gap-2 hover:bg-gray-800">
+              <button
+                onClick={addToCart}
+                disabled={loading}
+                className="flex-1 bg-black text-white py-4 rounded-xl flex justify-center items-center gap-2 hover:bg-gray-800 disabled:opacity-50"
+              >
                 <ShoppingCart size={20} />
-                Add to Cart
+                {loading ? "Adding..." : "Add to Cart"}
               </button>
 
               <button className="px-5 border rounded-xl hover:bg-gray-100">
                 <Heart />
               </button>
-
             </div>
 
             <button className="w-full mt-4 bg-green-600 text-white py-4 rounded-xl hover:bg-green-700">
               Buy Now
             </button>
 
-            {/* Features */}
-
+            {/* FEATURES */}
             <div className="mt-10 space-y-4 text-gray-600">
-
               <div className="flex items-center gap-3">
                 <Truck />
                 Free Shipping
@@ -234,11 +219,9 @@ const UserProductDetails = () => {
                 <ShieldCheck />
                 Secure Checkout
               </div>
-
             </div>
 
           </div>
-
         </div>
 
       </div>
