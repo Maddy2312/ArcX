@@ -9,7 +9,6 @@ const Home = () => {
   const navigate = useNavigate();
 
   const { products, loading } = useSelector((state) => state.product);
-
   useEffect(() => {
     handleUserProducts();
   }, []);

@@ -8,20 +8,10 @@ import EditVariant from "../features/products/pages/seller/EditVariant.jsx";
 import Home from "../features/products/pages/user/Home.jsx";
 import UserProductDetails from "../features/products/pages/user/UserProductDetails.jsx";
 import Cart from "../features/cart/pages/Cart.jsx";
+import AppLayout from "./AppLayout.jsx";
+import Protected from "../features/products/pages/components/Protected.jsx";
 
 const routes = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/product/:id",
-    element: <UserProductDetails />,
-  },
-  {
-    path: "/cart",
-    element: <Cart />,
-  },
   {
     path: "/register",
     element: <Register />,
@@ -31,24 +21,61 @@ const routes = createBrowserRouter([
     element: <Login />,
   },
   {
+    element: <AppLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/product/:id",
+        element: <UserProductDetails />,
+      },
+      {
+        path: "/cart",
+        element: (
+          <Protected>
+            <Cart />
+          </Protected>
+        ),
+      },
+    ],
+  },
+  {
     path: "/seller",
     children: [
       {
         path: "/seller/create-product",
-        element: <CreateProduct />,
+        element: (
+          <Protected role="seller">
+            <CreateProduct />
+          </Protected>
+        ),
       },
       {
-        path:"/seller/dashboard",
-        element: <SellerDashboard />,
+        path: "/seller/dashboard",
+        element: (
+          <Protected role="seller">
+            <SellerDashboard />
+          </Protected>
+        ),
       },
       {
-        path:"/seller/product/:id",
-        element: <SellerProductDetails />,
+        path: "/seller/product/:id",
+        element: (
+          <Protected role="seller">
+            <SellerProductDetails />
+          </Protected>
+        ),
       },
       {
-        path:"/seller/product/:id/variant/:variantId",
-        element: <EditVariant />,
-      }
+        path: "/seller/product/:id/variant/:variantId",
+        element: (
+          <Protected role="seller">
+            <EditVariant />
+          </Protected>
+        ),
+      },
     ],
   },
 ]);

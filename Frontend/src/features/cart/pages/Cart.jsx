@@ -16,7 +16,6 @@ const Cart = () => {
   useEffect(() => {
     handleGetCart();
   }, []);
-  console.log(items);
 
   if (loading) {
     return (
@@ -73,16 +72,6 @@ const Cart = () => {
                     <p className="mt-1">
                       <span className="font-medium">Color:</span>{" "}
                       {variant?.color}
-                    </p>
-
-                    {/* SIZE */}
-                    <p>
-                      <span className="font-medium">Size:</span>{" "}
-                      {variant?.size?.map((s) => (
-                        <span key={s._id} className="mr-2">
-                          {s.sizeOfShoe} {s.sizeStandard}
-                        </span>
-                      ))}
                     </p>
 
                     {/* QUANTITY */}
