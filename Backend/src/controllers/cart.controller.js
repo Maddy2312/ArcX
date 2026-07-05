@@ -85,3 +85,24 @@ export const addToCart = async (req, res) => {
     });
   }
 };
+
+export const getCart = async(req,res)=>{
+    try{
+    const user = req.user;
+    let cart = await cartModel.findOne({user:user.id}).populate("items.product");
+    if (!cart) {
+      cart = await cartModel.create({ user: user.id });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "Cart fetched successfully",
+      cart,
+    });
+    }catch(error){
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
+}
