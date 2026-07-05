@@ -18,3 +18,12 @@ export const addItemToCart = async (productId, variantId) => {
     throw error;
   }
 };
+
+export const getCart = async () => {
+  try {
+    const response = await CartApiInstance.get("/cart");
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

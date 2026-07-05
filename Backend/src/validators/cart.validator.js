@@ -9,19 +9,14 @@ const validate = (req, res, next) => {
 };
 
 export const validateAddToCart = [
-  param("productId")
-    .notEmpty()
-    .withMessage("Product ID is required"),
+  param("productId").notEmpty().withMessage("Product ID is required"),
 
-  param("variantId")
-    .notEmpty()
-    .withMessage("Variant ID is required"),
+  param("variantId").notEmpty().withMessage("Variant ID is required"),
 
   body("quantity")
     .notEmpty()
     .withMessage("Quantity is required")
     .isInt({ min: 1 })
     .withMessage("Quantity must be at least 1"),
-
   validate,
 ];

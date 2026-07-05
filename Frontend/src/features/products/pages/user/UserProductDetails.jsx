@@ -54,7 +54,6 @@ const UserProductDetails = () => {
     }
 
     setLoading(true);
-
     const result = await handleAddToCart(
       product._id,
       variant._id

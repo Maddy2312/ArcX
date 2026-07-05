@@ -1,3 +1,4 @@
+import { getCartDetails } from "../dao/cart.dao.js";
 import { stockOfVariant } from "../dao/product.dao.js";
 import cartModel from "../models/cart.model.js";
 import productModel from "../models/product.model.js";
@@ -24,7 +25,7 @@ export const addToCart = async (req, res) => {
     const isProductAlreadyInCart = cart.items.find(
       (item) =>
         item.product.toString() === productId &&
-        item.variant.toString() === variantId,
+        item.variant.toString() === variantId
     );
     if (isProductAlreadyInCart) {
       const quantityInCart = cart.items.find(
@@ -89,7 +90,8 @@ export const addToCart = async (req, res) => {
 export const getCart = async(req,res)=>{
     try{
     const user = req.user;
-    let cart = await cartModel.findOne({user:user.id}).populate("items.product");
+    // let cart = await cartModel.findOne({user:user.id}).populate("items.product");
+    let cart = await getCartDetails(user.id);
     if (!cart) {
       cart = await cartModel.create({ user: user.id });
     }

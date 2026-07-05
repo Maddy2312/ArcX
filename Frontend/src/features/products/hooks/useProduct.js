@@ -41,7 +41,6 @@ const useProduct = () => {
 
     const handleAddVariantSize = async (id,variantId,formData) => {
         try {
-            console.log(formData)
             const response = await addVariantSizeApi(id,variantId,formData);
             return response;
         } catch (error) {
