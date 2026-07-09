@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router'
 import routes from './app.routes'
 import useAuth from '../features/auth/hooks/useAuth.js'
 import { useSelector } from 'react-redux'
+import { ThemeProvider } from '../shared/context/ThemeContext.jsx'
 
 const App = () => {
   const { handleGetMe } = useAuth();
@@ -13,7 +14,9 @@ const App = () => {
   }, []);
 
   return (
-    <RouterProvider router={routes} />
+    <ThemeProvider>
+      <RouterProvider router={routes} />
+    </ThemeProvider>
   )
 }
 
