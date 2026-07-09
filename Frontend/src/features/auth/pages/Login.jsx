@@ -1,34 +1,24 @@
 import React, { useState } from "react";
 import { useAuth } from "../hooks/useAuth.js";
-import { useNavigate } from "react-router";
-import { ArrowRight, Lock, Mail } from "lucide-react";
+import { useNavigate, Link } from "react-router";
+import { ArrowRight, Lock, Mail, Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
   const { handleLogin } = useAuth();
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
+  const [showPwd, setShowPwd] = useState(false);
 
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  const handleChange = (e) => setFormData((p) => ({ ...p, [e.target.name]: e.target.value }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       const result = await handleLogin(formData);
-      console.log(result);
-      if (result.success) {
-        navigate("/");
-      }
+      if (result.success) navigate("/");
     } catch (error) {
       console.error(error);
     } finally {
@@ -37,125 +27,195 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-white text-[#1A1A1A] font-sans antialiased">
-      
-      {/* LEFT COLUMN: THEMATIC BRAND VISUAL (Hidden on Mobile) */}
-      <div className="hidden lg:flex lg:w-1/2 relative bg-[#EAECEE] items-center justify-center p-12 overflow-hidden">
-        {/* Large back-text element mimicking the Flare design motif */}
-        <div className="absolute inset-0 select-none flex items-center justify-center opacity-5 pointer-events-none">
-          <h1 className="text-[18vw] font-black tracking-tighter text-black">JOIN</h1>
+    <div className="flex min-h-screen bg-white dark:bg-black text-black dark:text-white">
+
+      {/* LEFT — Brand Panel */}
+      <div className="hidden lg:flex lg:w-1/2 relative bg-black dark:bg-white overflow-hidden items-center justify-center">
+        {/* Large background text */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden select-none">
+          <span className="text-[20vw] font-black uppercase tracking-[-0.05em] text-white/[0.04] dark:text-black/[0.04] leading-none">
+            AX
+          </span>
         </div>
 
-        {/* Diagonal colored accent block */}
-        <div className="absolute -bottom-10 -left-10 w-96 h-96 bg-gray-200/50 rounded-full blur-3xl pointer-events-none"></div>
+        {/* Grid lines */}
+        <div className="absolute inset-0 pointer-events-none opacity-10">
+          {[...Array(8)].map((_, i) => (
+            <div key={i} className="absolute top-0 bottom-0 w-px bg-white dark:bg-black" style={{ left: `${(i + 1) * 12.5}%` }} />
+          ))}
+        </div>
 
-        <div className="relative z-10 max-w-md text-left space-y-6">
-          <span className="inline-block bg-black text-white text-[10px] tracking-widest font-bold uppercase px-3 py-1 rounded-md">
-            Aero Step Club
+        <div className="relative z-10 p-12 max-w-md">
+          {/* Logo */}
+          <div className="flex items-center gap-3 mb-16">
+            <div className="w-9 h-9 bg-white dark:bg-black rounded-xl flex items-center justify-center">
+              <span className="text-black dark:text-white text-xs font-black">AX</span>
+            </div>
+            <span className="text-white dark:text-black text-xl font-black uppercase tracking-tight">ArcX</span>
+          </div>
+
+          <span className="inline-block border border-white/20 dark:border-black/20 text-white dark:text-black text-[10px] font-black tracking-[0.2em] uppercase px-3 py-1.5 rounded-full mb-6">
+            Member Access
           </span>
-          <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight leading-none text-black">
-            Unlock <br />Your Motion.
+          <h2 className="text-5xl md:text-6xl font-black uppercase tracking-tight leading-none text-white dark:text-black mb-6">
+            Unlock<br />Your<br />Motion.
           </h2>
-          <p className="text-gray-500 text-sm leading-relaxed font-medium">
-            Sign in to access your customized dashboard, tracked orders, and priority release drops.
+          <p className="text-white/40 dark:text-black/40 text-sm leading-relaxed font-medium mb-10">
+            Access your personalized dashboard, track orders, and be first for exclusive drop releases.
           </p>
-          
-          {/* Main Visual Sneaker Graphic */}
-          <div className="pt-4 flex justify-center">
+
+          {/* Sneaker image */}
+          <div className="relative">
+            <div className="absolute -inset-8 rounded-full bg-white/5 dark:bg-black/5 blur-2xl" />
             <img
-              src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=800&q=80"
-              alt="Premium Sneaker Drop"
-              className="w-full max-w-[340px] object-contain drop-shadow-[0_25px_25px_rgba(0,0,0,0.12)] transform -rotate-6 hover:rotate-0 transition-transform duration-500 ease-out"
+              src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=700&q=80"
+              alt="ArcX Premium"
+              className="relative w-full max-w-[320px] object-contain drop-shadow-[0_25px_50px_rgba(255,255,255,0.1)] transform -rotate-6 hover:rotate-0 transition-transform duration-700 ease-out mx-auto"
             />
           </div>
         </div>
       </div>
 
-      {/* RIGHT COLUMN: REFINED CONFIGURATOR LOGIN INTERFACE */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12 md:p-16 bg-white">
+      {/* RIGHT — Login Form */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12 md:p-16 bg-white dark:bg-black">
         <div className="w-full max-w-md space-y-8">
-          
-          {/* Header Layout */}
+
+          {/* Mobile logo */}
+          <div className="lg:hidden flex items-center gap-2 mb-2">
+            <div className="w-8 h-8 bg-black dark:bg-white rounded-lg flex items-center justify-center">
+              <span className="text-white dark:text-black text-[10px] font-black">AX</span>
+            </div>
+            <span className="text-xl font-black uppercase tracking-tight">ArcX</span>
+          </div>
+
           <div>
-            <h1 className="text-3xl font-extrabold tracking-tight text-black">Welcome Back</h1>
-            <p className="text-sm text-gray-400 mt-2">
+            <h1 className="text-3xl font-black tracking-tight text-black dark:text-white">Welcome back</h1>
+            <p className="text-sm text-black/40 dark:text-white/40 mt-2 font-medium">
               Don't have an account?{" "}
-              <span className="text-black font-bold underline cursor-pointer hover:text-gray-600">
-                Register free
-              </span>
+              <Link to="/register" className="text-black dark:text-white font-black hover:opacity-70 transition-opacity underline underline-offset-2">
+                Create one →
+              </Link>
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* EMAIL CONTAINER */}
+            {/* Email */}
             <div className="space-y-2">
-              <label className="text-xs font-bold tracking-wider text-gray-400 uppercase">
+              <label className="text-[10px] font-black tracking-[0.15em] uppercase text-black/30 dark:text-white/30">
                 Email Address
               </label>
-              <div className="relative flex items-center">
-                <Mail size={18} className="absolute left-4 text-gray-400 pointer-events-none" />
+              <div className="relative">
+                <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30 dark:text-white/30 pointer-events-none" />
                 <input
+                  id="login-email"
                   type="email"
                   name="email"
                   placeholder="name@domain.com"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full bg-[#F5F6F7] border border-transparent focus:border-black focus:bg-white text-sm font-medium rounded-xl pl-12 pr-4 py-4 transition-all outline-none text-black placeholder-gray-400"
                   required
+                  className="w-full bg-black/[0.03] dark:bg-white/[0.03] border-2 border-transparent focus:border-black dark:focus:border-white text-sm font-medium rounded-2xl pl-11 pr-4 py-4 transition-all outline-none text-black dark:text-white placeholder-black/30 dark:placeholder-white/30"
                 />
               </div>
             </div>
 
-            {/* PASSWORD CONTAINER */}
+            {/* Password */}
             <div className="space-y-2">
               <div className="flex justify-between items-center">
-                <label className="text-xs font-bold tracking-wider text-gray-400 uppercase">
+                <label className="text-[10px] font-black tracking-[0.15em] uppercase text-black/30 dark:text-white/30">
                   Password
                 </label>
-                <span className="text-xs font-semibold text-gray-400 underline cursor-pointer hover:text-black">
-                  Forgot?
-                </span>
+                <button type="button" className="text-[10px] font-black text-black/30 dark:text-white/30 hover:text-black dark:hover:text-white underline underline-offset-2 transition-colors">
+                  Forgot password?
+                </button>
               </div>
-              <div className="relative flex items-center">
-                <Lock size={18} className="absolute left-4 text-gray-400 pointer-events-none" />
+              <div className="relative">
+                <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30 dark:text-white/30 pointer-events-none" />
                 <input
-                  type="password"
+                  id="login-password"
+                  type={showPwd ? "text" : "password"}
                   name="password"
                   placeholder="••••••••"
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full bg-[#F5F6F7] border border-transparent focus:border-black focus:bg-white text-sm font-medium rounded-xl pl-12 pr-4 py-4 transition-all outline-none text-black placeholder-gray-400"
                   required
+                  className="w-full bg-black/[0.03] dark:bg-white/[0.03] border-2 border-transparent focus:border-black dark:focus:border-white text-sm font-medium rounded-2xl pl-11 pr-12 py-4 transition-all outline-none text-black dark:text-white placeholder-black/30 dark:placeholder-white/30"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPwd(!showPwd)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-black/30 dark:text-white/30 hover:text-black dark:hover:text-white transition-colors"
+                >
+                  {showPwd ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
               </div>
             </div>
 
-            {/* KEEP LOGGED IN CHECKBOX */}
-            <div className="flex items-center gap-2 pt-1">
-              <input
-                type="checkbox"
-                id="remember"
-                className="w-4 h-4 rounded border-gray-300 text-black focus:ring-black accent-black cursor-pointer"
-              />
-              <label htmlFor="remember" className="text-xs font-bold text-gray-500 cursor-pointer select-none">
-                Keep me signed in on this device
+            {/* Remember me */}
+            <div className="flex items-center gap-3">
+              <div className="relative w-10 h-5">
+                <input type="checkbox" id="remember" className="sr-only peer" />
+                <label
+                  htmlFor="remember"
+                  className="w-10 h-5 bg-black/10 dark:bg-white/10 rounded-full cursor-pointer block peer-checked:bg-black dark:peer-checked:bg-white transition-colors"
+                />
+                <div className="absolute top-0.5 left-0.5 w-4 h-4 bg-white dark:bg-black rounded-full pointer-events-none transition-transform peer-checked:translate-x-5" />
+              </div>
+              <label htmlFor="remember" className="text-xs font-bold text-black/40 dark:text-white/40 cursor-pointer select-none">
+                Keep me signed in
               </label>
             </div>
 
-            {/* SUBMIT BUTTON */}
+            {/* Submit */}
             <button
+              id="login-submit"
               type="submit"
               disabled={loading}
-              className="w-full mt-4 bg-black text-white font-medium py-4 rounded-xl flex justify-center items-center gap-2 hover:bg-gray-800 transition active:scale-[0.99] disabled:opacity-50 shadow-lg shadow-black/5"
+              className="w-full bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-wider py-4 rounded-2xl flex justify-center items-center gap-2 hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-all duration-200 active:scale-[0.99] disabled:opacity-50 shadow-lg shadow-black/10 dark:shadow-white/10 mt-2 text-sm"
             >
-              <span>{loading ? "Verifying..." : "Sign In to Account"}</span>
-              {!loading && <ArrowRight size={16} />}
+              {loading ? (
+                <div className="w-5 h-5 border-2 border-white/30 dark:border-black/30 border-t-white dark:border-t-black rounded-full animate-spin" />
+              ) : (
+                <>
+                  Sign In
+                  <ArrowRight size={16} />
+                </>
+              )}
             </button>
           </form>
 
+          {/* Divider */}
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-black/5 dark:border-white/5" />
+            </div>
+            <div className="relative flex justify-center">
+              <span className="bg-white dark:bg-black px-4 text-[10px] font-black tracking-wider uppercase text-black/20 dark:text-white/20">
+                Or continue with
+              </span>
+            </div>
+          </div>
+
+          {/* Social login placeholders */}
+          <div className="grid grid-cols-2 gap-3">
+            {["Google", "Apple"].map((provider) => (
+              <button
+                key={provider}
+                className="flex items-center justify-center gap-2 py-3 border-2 border-black/10 dark:border-white/10 rounded-2xl text-sm font-bold text-black/60 dark:text-white/60 hover:border-black/30 dark:hover:border-white/30 hover:text-black dark:hover:text-white transition-all"
+              >
+                {provider === "Google" ? "🌐" : "🍎"} {provider}
+              </button>
+            ))}
+          </div>
+
+          <p className="text-center text-[10px] text-black/20 dark:text-white/20 font-medium">
+            By signing in, you agree to ArcX{" "}
+            <span className="underline cursor-pointer hover:text-black dark:hover:text-white transition-colors">Terms</span>{" "}
+            and{" "}
+            <span className="underline cursor-pointer hover:text-black dark:hover:text-white transition-colors">Privacy Policy</span>.
+          </p>
         </div>
       </div>
-
     </div>
   );
 };
