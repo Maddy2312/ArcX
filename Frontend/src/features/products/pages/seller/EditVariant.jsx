@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import useProduct from "../../hooks/useProduct";
-import { ArrowLeft, Plus, Ruler, Layers, Package, CheckCircle, AlertCircle } from "lucide-react";
+import {
+  ArrowLeft, Plus, Ruler, Layers, Package,
+  CheckCircle, AlertCircle, ChevronDown, ArrowRight
+} from "lucide-react";
 
 const EditVariant = () => {
   const { id, variantId } = useParams();
@@ -10,15 +13,13 @@ const EditVariant = () => {
 
   const [variant, setVariant] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [notification, setNotification] = useState(null);
 
-  // Form states
   const [sizeOfShoe, setSizeOfShoe] = useState("");
   const [sizeStandard, setSizeStandard] = useState("US");
   const [stock, setStock] = useState("");
 
-  useEffect(() => {
-    fetchVariant();
-  }, [id, variantId]);
+  useEffect(() => { fetchVariant(); }, [id, variantId]);
 
   const fetchVariant = async () => {
     const res = await handleProductDetails(id);
@@ -29,177 +30,210 @@ const EditVariant = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-
     try {
-      await handleAddVariantSize(id, variantId, {
-        sizeOfShoe,
-        sizeStandard,
-        stock,
-      });
-
+      await handleAddVariantSize(id, variantId, { sizeOfShoe, sizeStandard, stock });
       await fetchVariant();
-
-      setSizeOfShoe("");
-      setSizeStandard("US");
-      setStock("");
+      setSizeOfShoe(""); setSizeStandard("US"); setStock("");
+      setNotification({ type: "success", msg: "Size added!" });
+      setTimeout(() => setNotification(null), 3000);
     } catch (error) {
       console.error(error);
+      setNotification({ type: "error", msg: "Failed to add size." });
+      setTimeout(() => setNotification(null), 3000);
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const inputClass = "w-full bg-black/[0.03] dark:bg-white/[0.03] border-2 border-transparent focus:border-black dark:focus:border-white text-sm font-medium rounded-2xl px-4 py-3.5 transition-all outline-none text-black dark:text-white placeholder-black/30 dark:placeholder-white/30";
+  const labelClass = "block text-[10px] font-black tracking-[0.15em] uppercase text-black/30 dark:text-white/30 mb-2";
+
   if (!variant) {
     return (
-      <div className="min-h-screen bg-[#F9F9FA] text-[#1A1A1A] flex flex-col items-center justify-center gap-3">
-        <div className="w-8 h-8 border-4 border-black border-t-transparent rounded-full animate-spin"></div>
-        <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Loading Variant Details...</p>
+      <div className="min-h-screen bg-white dark:bg-black flex flex-col items-center justify-center gap-3">
+        <div className="w-8 h-8 border-2 border-black/10 dark:border-white/10 border-t-black dark:border-t-white rounded-full animate-spin" />
+        <p className="text-[10px] font-black tracking-[0.2em] uppercase text-black/30 dark:text-white/30">Loading Variant</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#F9F9FA] text-[#1A1A1A] font-sans antialiased p-4 sm:p-6 lg:p-12 pb-32">
-      <div className="max-w-3xl mx-auto space-y-8">
-        
-        {/* HEADER NAVIGATION */}
+    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white pt-24 pb-32">
+      <div className="max-w-4xl mx-auto px-6 space-y-10">
+
+        {/* Notification Toast */}
+        {notification && (
+          <div className={`fixed top-24 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-xl text-sm font-bold ${
+            notification.type === "success"
+              ? "bg-black dark:bg-white text-white dark:text-black"
+              : "bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400"
+          }`}>
+            {notification.type === "success" ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
+            {notification.msg}
+          </div>
+        )}
+
+        {/* Header */}
         <div className="flex items-center justify-between">
           <button
             onClick={() => navigate(`/seller/product/${id}`)}
-            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-black transition"
+            className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-black/30 dark:text-white/30 hover:text-black dark:hover:text-white transition-colors"
           >
-            <ArrowLeft size={14} /> Back to Product
+            <ArrowLeft size={14} />
+            Back to Product
           </button>
-          
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Colorway:</span>
-            <span className="bg-black text-white text-[10px] font-black tracking-widest uppercase px-3 py-1 rounded-md">
-              {variant.color || "Default"}
-            </span>
-          </div>
+          <span className="bg-black dark:bg-white text-white dark:text-black text-[10px] font-black tracking-[0.15em] uppercase px-3 py-1.5 rounded-full">
+            {variant.color || "Default Colorway"}
+          </span>
         </div>
 
-        {/* WORKSPACE PROFILE TITLE */}
-        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-gray-100 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div>
-            <span className="text-[10px] tracking-widest font-bold uppercase text-gray-400">Inventory Matrix</span>
-            <h1 className="text-2xl font-black uppercase tracking-tight text-black mt-0.5">Edit Variant Allocations</h1>
-            <p className="text-gray-400 text-xs mt-1">Scale custom regional sizes and independent stock vaults inside this cluster block.</p>
-          </div>
-          
-          {variant.images && variant.images.length > 0 && (
-            <div className="bg-[#F5F6F7] p-2 rounded-xl border border-gray-100 flex items-center justify-center">
-              <img src={variant.images[0].url} className="w-16 h-16 object-contain mix-blend-darken" alt="" />
+        <div>
+          <span className="text-[10px] font-black tracking-[0.2em] uppercase text-black/30 dark:text-white/30">Variant Editor</span>
+          <h1 className="text-4xl font-black uppercase tracking-tight mt-1 text-black dark:text-white">
+            Edit Sizes &<br />Stock
+          </h1>
+        </div>
+
+        {/* Variant Overview */}
+        <div className="flex items-center gap-5 p-5 bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 rounded-2xl">
+          {variant.images?.[0]?.url && (
+            <div className="w-16 h-16 bg-zinc-50 dark:bg-zinc-950 rounded-xl border border-black/5 dark:border-white/5 flex items-center justify-center shrink-0">
+              <img src={variant.images[0].url} className="max-w-[80%] max-h-[80%] object-contain" alt={variant.color} />
             </div>
           )}
+          <div>
+            <p className="text-[10px] font-black tracking-wider uppercase text-black/30 dark:text-white/30">Colorway</p>
+            <p className="text-lg font-black text-black dark:text-white mt-0.5">{variant.color}</p>
+            <p className="text-xs text-black/40 dark:text-white/40 mt-0.5">{variant.size?.length || 0} size entries</p>
+          </div>
         </div>
 
-        {/* CONTROLS LAYOUT SPLIT */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-          
-          {/* LEFT CONTAINER: EXISTING SIZE SPECIFICATIONS BOX */}
-          <div className="md:col-span-6 bg-white p-6 rounded-3xl border border-gray-100 shadow-sm space-y-4">
-            <div className="flex items-center gap-2 pb-2 border-b border-gray-50">
-              <Layers size={16} className="text-gray-400" />
-              <h2 className="text-sm font-extrabold tracking-tight text-black uppercase">Active Stock Breakdown</h2>
+        <div className="grid md:grid-cols-2 gap-8">
+
+          {/* LEFT — Current Sizes */}
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <Layers size={14} className="text-black/30 dark:text-white/30" />
+              <span className="text-xs font-black uppercase tracking-wider text-black/30 dark:text-white/30">
+                Current Stock ({variant.size?.length || 0} sizes)
+              </span>
             </div>
 
-            {!variant.size || variant.size.length === 0 ? (
-              <p className="text-center py-12 text-xs font-medium text-gray-400">No sizing scales populated yet.</p>
-            ) : (
-              <div className="space-y-2 max-h-[320px] overflow-y-auto pr-1">
-                {variant.size.map((s, i) => {
-                  const isLowStock = (s.stock || 0) <= 5;
+            <div className="space-y-2 max-h-80 overflow-y-auto">
+              {(!variant.size || variant.size.length === 0) ? (
+                <div className="text-center py-10 border-2 border-dashed border-black/10 dark:border-white/10 rounded-2xl">
+                  <Ruler size={18} className="text-black/20 dark:text-white/20 mx-auto mb-2" />
+                  <p className="text-xs font-black uppercase text-black/20 dark:text-white/20">No sizes yet</p>
+                </div>
+              ) : (
+                variant.size.map((s, i) => {
+                  const isLow = (s.stock || 0) <= 5;
+                  const isOOS = (s.stock || 0) === 0;
                   return (
                     <div
                       key={i}
-                      className="flex justify-between items-center bg-[#F5F6F7] px-4 py-3.5 rounded-xl border border-transparent hover:border-gray-200 transition"
+                      className={`flex justify-between items-center px-4 py-3 rounded-2xl border transition-all ${
+                        isOOS
+                          ? "bg-red-50 dark:bg-red-950/20 border-red-100 dark:border-red-900/30"
+                          : isLow
+                            ? "bg-orange-50 dark:bg-orange-950/20 border-orange-100 dark:border-orange-900/30"
+                            : "bg-black/[0.02] dark:bg-white/[0.02] border-black/5 dark:border-white/5"
+                      }`}
                     >
-                      <span className="text-xs font-bold text-black uppercase tracking-wider">
+                      <span className="text-sm font-black uppercase tracking-tight text-black dark:text-white">
                         {s.sizeStandard} {s.sizeOfShoe}
                       </span>
-
-                      <span
-                        className={`inline-flex items-center gap-1 text-xs font-bold ${
-                          isLowStock ? "text-red-500" : "text-green-600"
-                        }`}
-                      >
-                        {isLowStock ? <AlertCircle size={12} /> : <CheckCircle size={12} />}
-                        {s.stock} Units
-                      </span>
+                      <div className="flex items-center gap-2">
+                        {isOOS ? (
+                          <AlertCircle size={13} className="text-red-500" />
+                        ) : isLow ? (
+                          <AlertCircle size={13} className="text-orange-500" />
+                        ) : (
+                          <CheckCircle size={13} className="text-emerald-500" />
+                        )}
+                        <span className={`text-xs font-black ${isOOS ? "text-red-500" : isLow ? "text-orange-500" : "text-emerald-600 dark:text-emerald-400"}`}>
+                          {isOOS ? "Out of Stock" : `${s.stock} units`}
+                        </span>
+                      </div>
                     </div>
                   );
-                })}
-              </div>
-            )}
+                })
+              )}
+            </div>
           </div>
 
-          {/* RIGHT CONTAINER: DYNAMIC ADD SIZE GENERATOR FORM */}
-          <div className="md:col-span-6 bg-white p-6 rounded-3xl border border-gray-100 shadow-sm space-y-5">
-            <div className="flex items-center gap-2 pb-2 border-b border-gray-50">
-              <Plus size={16} className="text-gray-400" />
-              <h2 className="text-sm font-extrabold tracking-tight text-black uppercase">Insert Sizing Node</h2>
+          {/* RIGHT — Add Size Form */}
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <Plus size={14} className="text-black/30 dark:text-white/30" />
+              <span className="text-xs font-black uppercase tracking-wider text-black/30 dark:text-white/30">Add New Size</span>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {/* SIZE VALUE INPUT */}
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-bold tracking-wider text-gray-400 uppercase">Size Unit</label>
-                <div className="relative flex items-center">
-                  <Ruler size={16} className="absolute left-4 text-gray-400" />
+            <form onSubmit={handleSubmit} className="space-y-4 bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 rounded-3xl p-6">
+              {/* Size Number */}
+              <div>
+                <label className={labelClass}>Size (Number)</label>
+                <div className="relative">
+                  <Ruler size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30 dark:text-white/30 pointer-events-none" />
                   <input
                     type="number"
                     step="0.5"
-                    className="w-full bg-[#F5F6F7] border border-transparent focus:border-black focus:bg-white text-sm font-semibold rounded-xl pl-12 pr-4 py-3.5 transition outline-none text-black placeholder-gray-400"
                     placeholder="e.g., 10.5"
                     value={sizeOfShoe}
                     onChange={(e) => setSizeOfShoe(e.target.value)}
                     required
+                    className={`${inputClass} pl-11`}
                   />
                 </div>
               </div>
 
-              {/* REGION DIALECT */}
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-bold tracking-wider text-gray-400 uppercase">Scale Context</label>
-                <select
-                  className="w-full bg-[#F5F6F7] border border-transparent focus:border-black focus:bg-white text-sm font-bold rounded-xl px-4 py-3.5 transition outline-none text-black cursor-pointer appearance-none"
-                  value={sizeStandard}
-                  onChange={(e) => setSizeStandard(e.target.value)}
-                >
-                  <option value="US">US Metric Standard</option>
-                  <option value="UK">UK Metric Standard</option>
-                  <option value="EU">EU Metric Standard</option>
-                </select>
+              {/* Size Standard */}
+              <div>
+                <label className={labelClass}>Size Standard</label>
+                <div className="relative">
+                  <select
+                    value={sizeStandard}
+                    onChange={(e) => setSizeStandard(e.target.value)}
+                    className={`${inputClass} appearance-none cursor-pointer`}
+                  >
+                    {["US", "UK", "EU", "CM"].map((s) => (
+                      <option key={s} value={s}>{s}</option>
+                    ))}
+                  </select>
+                  <ChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-black/30 dark:text-white/30 pointer-events-none" />
+                </div>
               </div>
 
-              {/* VAULT STOCK QUANTITY */}
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-bold tracking-wider text-gray-400 uppercase">Batch Unit Volume</label>
-                <div className="relative flex items-center">
-                  <Package size={16} className="absolute left-4 text-gray-400" />
+              {/* Stock */}
+              <div>
+                <label className={labelClass}>Stock Quantity</label>
+                <div className="relative">
+                  <Package size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30 dark:text-white/30 pointer-events-none" />
                   <input
                     type="number"
-                    className="w-full bg-[#F5F6F7] border border-transparent focus:border-black focus:bg-white text-sm font-semibold rounded-xl pl-12 pr-4 py-3.5 transition outline-none text-black placeholder-gray-400"
                     placeholder="e.g., 25"
                     value={stock}
                     onChange={(e) => setStock(e.target.value)}
                     required
+                    min="0"
+                    className={`${inputClass} pl-11`}
                   />
                 </div>
               </div>
 
-              {/* FORM EMISSION RESOLVER BUTTON */}
-              <button 
+              <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full mt-2 bg-black text-white text-xs font-bold uppercase tracking-wider py-4 rounded-xl flex justify-center items-center gap-2 hover:bg-gray-800 transition active:scale-[0.99] disabled:opacity-50 shadow-md shadow-black/5"
+                className="w-full bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-wider py-4 rounded-2xl flex justify-center items-center gap-2 hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-all active:scale-[0.99] disabled:opacity-50 text-sm mt-2"
               >
-                <span>{isSubmitting ? "Updating Registry..." : "Commit Sizing Scale"}</span>
+                {isSubmitting ? (
+                  <div className="w-5 h-5 border-2 border-white/30 dark:border-black/30 border-t-white dark:border-t-black rounded-full animate-spin" />
+                ) : (
+                  <><Plus size={16} /> Add Size Entry</>
+                )}
               </button>
             </form>
           </div>
-
         </div>
       </div>
     </div>

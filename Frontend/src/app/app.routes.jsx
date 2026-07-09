@@ -10,6 +10,7 @@ import UserProductDetails from "../features/products/pages/user/UserProductDetai
 import Cart from "../features/cart/pages/Cart.jsx";
 import AppLayout from "./AppLayout.jsx";
 import Protected from "../features/products/pages/components/Protected.jsx";
+import Running from "../features/products/pages/groups/Running.jsx";
 
 const routes = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const routes = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/running",
+        element: <Running />,
       },
       {
         path: "/product/:id",
