@@ -34,7 +34,7 @@ const Home = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex justify-center items-center bg-white dark:bg-black">
+      <div className="min-h-screen flex justify-center items-center bg-[#e9e9e9] dark:bg-black">
         <div className="flex flex-col items-center gap-4">
           <div className="w-10 h-10 border-2 border-black/10 dark:border-white/10 border-t-black dark:border-t-white rounded-full animate-spin" />
           <p className="text-xs font-bold tracking-[0.2em] uppercase text-black/30 dark:text-white/30">Loading Collection</p>
@@ -44,12 +44,12 @@ const Home = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white font-[Space_Grotesk,Inter,sans-serif]">
+    <div className="min-h-screen bg-[#e9e9e9] dark:bg-black text-black dark:text-white font-[Space_Grotesk,Inter,sans-serif]">
 
       {/* ══════════════════════════════════════════
           HERO SECTION — Editorial cinematic layout
       ══════════════════════════════════════════ */}
-      <section className="relative min-h-screen flex items-center overflow-hidden bg-white dark:bg-black pt-20">
+      <section className="relative min-h-screen flex items-center overflow-hidden bg-[#e9e9e9] dark:bg-black pt-20">
         {/* Massive background text — inspired by FLARE / VECTOR designs */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
           <span className="text-[18vw] font-black uppercase tracking-[-0.05em] text-black/[0.04] dark:text-white/[0.04] leading-none">
@@ -59,16 +59,16 @@ const Home = () => {
 
         {/* Grid lines decoration */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute left-0 top-0 bottom-0 w-px bg-black/5 dark:bg-white/5 ml-6 lg:ml-16" />
-          <div className="absolute right-0 top-0 bottom-0 w-px bg-black/5 dark:bg-white/5 mr-6 lg:mr-16" />
+          <div className="absolute left-0 top-0 bottom-0 w-px bg-black/5 dark:bg-[#e9e9e9]/5 ml-6 lg:ml-16" />
+          <div className="absolute right-0 top-0 bottom-0 w-px bg-black/5 dark:bg-[#e9e9e9]/5 mr-6 lg:mr-16" />
         </div>
 
         <div className="max-w-7xl mx-auto px-6 lg:px-16 w-full grid lg:grid-cols-2 gap-12 items-center relative z-10 py-20">
           {/* LEFT — Copy */}
           <div className="space-y-8">
             <div className="flex items-center gap-3">
-              <span className="inline-flex items-center gap-2 bg-black dark:bg-white text-white dark:text-black text-[10px] font-black tracking-[0.2em] uppercase px-4 py-2 rounded-full">
-                <span className="w-1.5 h-1.5 bg-white dark:bg-black rounded-full animate-pulse" />
+              <span className="inline-flex items-center gap-2 bg-black dark:bg-[#e9e9e9] text-white dark:text-black text-[10px] font-black tracking-[0.2em] uppercase px-4 py-2 rounded-full">
+                <span className="w-1.5 h-1.5 bg-[#e9e9e9] dark:bg-black rounded-full animate-pulse" />
                 Premium Collection 2026
               </span>
             </div>
@@ -90,12 +90,12 @@ const Home = () => {
             <div className="flex flex-wrap items-center gap-4 pt-2">
               <button
                 onClick={() => document.getElementById("products-section")?.scrollIntoView({ behavior: "smooth" })}
-                className="group flex items-center gap-3 bg-black dark:bg-white text-white dark:text-black font-bold px-8 py-4 rounded-full hover:gap-5 transition-all duration-300 shadow-lg shadow-black/10 dark:shadow-white/10"
+                className="group flex items-center gap-3 bg-black dark:bg-[#e9e9e9] text-white dark:text-black font-bold px-8 py-4 rounded-full hover:gap-5 transition-all duration-300 shadow-lg shadow-black/10 dark:shadow-white/10"
               >
                 Explore Catalog
                 <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
               </button>
-              <button className="flex items-center gap-2 border border-black/20 dark:border-white/20 text-black dark:text-white font-semibold px-8 py-4 rounded-full hover:border-black dark:hover:border-white hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-200">
+              <button className="flex items-center gap-2 border border-black/20 dark:border-white/20 text-black dark:text-white font-semibold px-8 py-4 rounded-full hover:border-black dark:hover:border-white hover:bg-black/5 dark:hover:bg-[#e9e9e9]/5 transition-all duration-200">
                 New Arrivals
               </button>
             </div>
@@ -104,7 +104,7 @@ const Home = () => {
             <div className="flex items-center gap-6 pt-4 border-t border-black/5 dark:border-white/5">
               <div className="flex -space-x-2">
                 {["🧑", "👩", "👨", "🧑‍🦱"].map((em, i) => (
-                  <div key={i} className="w-8 h-8 rounded-full bg-black/10 dark:bg-white/10 border-2 border-white dark:border-black flex items-center justify-center text-sm">
+                  <div key={i} className="w-8 h-8 rounded-full bg-black/10 dark:bg-[#e9e9e9]/10 border-2 border-white dark:border-black flex items-center justify-center text-sm">
                     {em}
                   </div>
                 ))}
@@ -123,8 +123,8 @@ const Home = () => {
           {/* RIGHT — Hero product image */}
           <div className="relative flex items-center justify-center">
             {/* Circular background */}
-            <div className="absolute w-[500px] h-[500px] rounded-full bg-black/[0.04] dark:bg-white/[0.04] border border-black/5 dark:border-white/5" />
-            <div className="absolute w-[380px] h-[380px] rounded-full bg-black/[0.04] dark:bg-white/[0.04] border border-black/5 dark:border-white/5" />
+            <div className="absolute w-[500px] h-[500px] rounded-full bg-black/[0.04] dark:bg-[#e9e9e9]/[0.04] border border-black/5 dark:border-white/5" />
+            <div className="absolute w-[380px] h-[380px] rounded-full bg-black/[0.04] dark:bg-[#e9e9e9]/[0.04] border border-black/5 dark:border-white/5" />
 
             <img
               src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=90"
@@ -133,11 +133,11 @@ const Home = () => {
             />
 
             {/* Floating stat cards */}
-            <div className="absolute top-8 right-0 bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3 shadow-xl shadow-black/5 dark:shadow-white/5">
+            <div className="absolute top-8 right-0 bg-[#e9e9e9] dark:bg-zinc-900 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3 shadow-xl shadow-black/5 dark:shadow-white/5">
               <p className="text-[10px] text-black/40 dark:text-white/40 uppercase tracking-widest font-bold">Rating</p>
               <p className="text-lg font-black">4.9 ★</p>
             </div>
-            <div className="absolute bottom-8 left-0 bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3 shadow-xl shadow-black/5 dark:shadow-white/5">
+            <div className="absolute bottom-8 left-0 bg-[#e9e9e9] dark:bg-zinc-900 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3 shadow-xl shadow-black/5 dark:shadow-white/5">
               <p className="text-[10px] text-black/40 dark:text-white/40 uppercase tracking-widest font-bold">Collection</p>
               <p className="text-lg font-black">SS '26</p>
             </div>
@@ -154,15 +154,15 @@ const Home = () => {
       {/* ══════════════════════════════════════════
           TRUST BADGES STRIP
       ══════════════════════════════════════════ */}
-      <section className="border-y border-black/5 dark:border-white/5 bg-black dark:bg-white">
-        <div className="max-w-7xl mx-auto px-6 py-6 grid grid-cols-2 md:grid-cols-4 gap-px bg-black/5 dark:bg-white/5">
+      <section className="border-y border-black/5 dark:border-white/5 bg-black dark:bg-[#e9e9e9]">
+        <div className="max-w-7xl mx-auto px-6 py-6 grid grid-cols-2 md:grid-cols-4 gap-px bg-black/5 dark:bg-[#e9e9e9]/5">
           {[
             { icon: <Truck size={18} />, title: "Free Delivery", sub: "On orders over $150" },
             { icon: <RotateCcw size={18} />, title: "14-Day Returns", sub: "Hassle-free exchanges" },
             { icon: <ShieldCheck size={18} />, title: "100% Authentic", sub: "Verified sources only" },
             { icon: <Headphones size={18} />, title: "24/7 Support", sub: "Always on, always ready" },
           ].map((item, i) => (
-            <div key={i} className="flex items-center gap-4 px-6 py-5 bg-black dark:bg-white hover:bg-zinc-900 dark:hover:bg-zinc-100 transition-colors">
+            <div key={i} className="flex items-center gap-4 px-6 py-5 bg-black dark:bg-[#e9e9e9] hover:bg-zinc-900 dark:hover:bg-zinc-100 transition-colors">
               <div className="text-white dark:text-black opacity-60">{item.icon}</div>
               <div>
                 <p className="text-white dark:text-black font-bold text-sm">{item.title}</p>
@@ -194,7 +194,7 @@ const Home = () => {
             <div
             onClick={() => navigate(`/products/${cat.name}`)}
               key={i}
-              className="group relative h-72 rounded-3xl overflow-hidden cursor-pointer bg-black/5 dark:bg-white/5"
+              className="group relative h-72 rounded-3xl overflow-hidden cursor-pointer bg-black/5 dark:bg-[#e9e9e9]/5"
             >
               <img
                 src={cat.img}
@@ -247,7 +247,7 @@ const Home = () => {
             {products.map((product) => (
               <div
                 key={product._id}
-                className="group relative bg-white dark:bg-zinc-950 border border-black/5 dark:border-white/5 rounded-3xl overflow-hidden hover:border-black/20 dark:hover:border-white/20 hover:shadow-2xl hover:shadow-black/5 dark:hover:shadow-white/5 transition-all duration-500 flex flex-col"
+                className="group relative bg-[#e9e9e9] dark:bg-zinc-950 border border-black/5 dark:border-white/5 rounded-3xl overflow-hidden hover:border-black/20 dark:hover:border-white/20 hover:shadow-2xl hover:shadow-black/5 dark:hover:shadow-white/5 transition-all duration-500 flex flex-col"
               >
                 {/* Image Container */}
                 <div className="relative bg-zinc-50 dark:bg-zinc-900 m-3 rounded-2xl h-60 flex items-center justify-center overflow-hidden">
@@ -258,18 +258,18 @@ const Home = () => {
                   />
 
                   {/* Category badge */}
-                  <span className="absolute top-3 left-3 bg-black dark:bg-white text-white dark:text-black text-[9px] font-black tracking-[0.15em] uppercase px-3 py-1 rounded-full">
+                  <span className="absolute top-3 left-3 bg-black dark:bg-[#e9e9e9] text-white dark:text-black text-[9px] font-black tracking-[0.15em] uppercase px-3 py-1 rounded-full">
                     {product.category || "New"}
                   </span>
 
                   {/* Hover quick actions */}
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 dark:group-hover:bg-white/5 transition-colors duration-300 flex items-end justify-center pb-4 gap-2 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                    <button className="flex items-center gap-1.5 bg-white dark:bg-black border border-black/10 dark:border-white/10 text-black dark:text-white text-[10px] font-black uppercase tracking-wider px-3 py-2 rounded-xl hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition">
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 dark:group-hover:bg-[#e9e9e9]/5 transition-colors duration-300 flex items-end justify-center pb-4 gap-2 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                    <button className="flex items-center gap-1.5 bg-[#e9e9e9] dark:bg-black border border-black/10 dark:border-white/10 text-black dark:text-white text-[10px] font-black uppercase tracking-wider px-3 py-2 rounded-xl hover:bg-black hover:text-white dark:hover:bg-[#e9e9e9] dark:hover:text-black transition">
                       <Heart size={12} /> Save
                     </button>
                     <button
                       onClick={() => navigate(`/product/${product._id}`)}
-                      className="flex items-center gap-1.5 bg-black dark:bg-white text-white dark:text-black text-[10px] font-black uppercase tracking-wider px-3 py-2 rounded-xl hover:bg-zinc-800 dark:hover:bg-zinc-100 transition"
+                      className="flex items-center gap-1.5 bg-black dark:bg-[#e9e9e9] text-white dark:text-black text-[10px] font-black uppercase tracking-wider px-3 py-2 rounded-xl hover:bg-zinc-800 dark:hover:bg-zinc-100 transition"
                     >
                       <Eye size={12} /> View
                     </button>
@@ -293,7 +293,7 @@ const Home = () => {
                     </div>
                     <button
                       onClick={() => navigate(`/product/${product._id}`)}
-                      className="group/btn flex items-center gap-2 bg-black dark:bg-white text-white dark:text-black text-xs font-black uppercase tracking-wider px-4 py-2.5 rounded-xl hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-all duration-200 active:scale-95"
+                      className="group/btn flex items-center gap-2 bg-black dark:bg-[#e9e9e9] text-white dark:text-black text-xs font-black uppercase tracking-wider px-4 py-2.5 rounded-xl hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-all duration-200 active:scale-95"
                     >
                       Buy
                       <ArrowRight size={12} className="transition-transform group-hover/btn:translate-x-0.5" />
@@ -309,7 +309,7 @@ const Home = () => {
       {/* ══════════════════════════════════════════
           TECHNOLOGY STRIP — VECTOR inspired
       ══════════════════════════════════════════ */}
-      <section className="bg-black dark:bg-white py-24">
+      <section className="bg-black dark:bg-[#e9e9e9] py-24">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <span className="text-[10px] font-black tracking-[0.2em] uppercase text-white/30 dark:text-black/30">Innovation</span>
@@ -318,11 +318,11 @@ const Home = () => {
             </h2>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 dark:bg-black/10">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[#e9e9e9]/10 dark:bg-black/10">
             {techFeatures.map((feat, i) => (
               <div
                 key={i}
-                className="group bg-black dark:bg-white hover:bg-zinc-900 dark:hover:bg-zinc-100 transition-colors p-8 text-center flex flex-col items-center gap-4"
+                className="group bg-black dark:bg-[#e9e9e9] hover:bg-zinc-900 dark:hover:bg-zinc-100 transition-colors p-8 text-center flex flex-col items-center gap-4"
               >
                 <div className="w-12 h-12 border border-white/20 dark:border-black/20 rounded-2xl flex items-center justify-center text-white dark:text-black group-hover:border-white dark:group-hover:border-black transition-colors">
                   {feat.icon}
@@ -341,14 +341,14 @@ const Home = () => {
           CTA BANNER — Join ArcX
       ══════════════════════════════════════════ */}
       <section className="max-w-7xl mx-auto px-6 py-24">
-        <div className="relative overflow-hidden rounded-3xl bg-black dark:bg-white p-12 md:p-20 text-center">
+        <div className="relative overflow-hidden rounded-3xl bg-black dark:bg-[#e9e9e9] p-12 md:p-20 text-center">
           {/* Bg text */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
             <span className="text-[20vw] font-black uppercase text-white/[0.03] dark:text-black/[0.03] leading-none tracking-tighter whitespace-nowrap">ARCX</span>
           </div>
 
           <div className="relative z-10 max-w-2xl mx-auto">
-            <span className="inline-block bg-white/10 dark:bg-black/10 text-white dark:text-black text-[10px] font-black tracking-[0.2em] uppercase px-4 py-2 rounded-full mb-6">
+            <span className="inline-block bg-[#e9e9e9]/10 dark:bg-black/10 text-white dark:text-black text-[10px] font-black tracking-[0.2em] uppercase px-4 py-2 rounded-full mb-6">
               Exclusive Access
             </span>
             <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tight text-white dark:text-black leading-none mb-4">
@@ -359,7 +359,7 @@ const Home = () => {
             </p>
             <button
               onClick={() => navigate("/register")}
-              className="group inline-flex items-center gap-3 bg-white dark:bg-black text-black dark:text-white font-black uppercase tracking-wider px-10 py-5 rounded-full hover:gap-5 transition-all duration-300 text-sm shadow-2xl shadow-white/20 dark:shadow-black/20"
+              className="group inline-flex items-center gap-3 bg-[#e9e9e9] dark:bg-black text-black dark:text-white font-black uppercase tracking-wider px-10 py-5 rounded-full hover:gap-5 transition-all duration-300 text-sm shadow-2xl shadow-white/20 dark:shadow-black/20"
             >
               Create Account
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
@@ -375,7 +375,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-6 py-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-12">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-7 h-7 bg-black dark:bg-white rounded-lg flex items-center justify-center">
+              <div className="w-7 h-7 bg-black dark:bg-[#e9e9e9] rounded-lg flex items-center justify-center">
                 <span className="text-white dark:text-black text-[10px] font-black">AX</span>
               </div>
               <span className="text-lg font-black tracking-tight text-black dark:text-white uppercase">ArcX</span>

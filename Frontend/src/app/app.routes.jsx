@@ -12,6 +12,9 @@ import AppLayout from "./AppLayout.jsx";
 import Protected from "../features/products/pages/components/Protected.jsx";
 import Running from "../features/products/pages/groups/Running.jsx";
 import Basketball from "../features/products/pages/groups/Basketball.jsx";
+import Training from "../features/products/pages/groups/Training.jsx";
+import LifeStyle from "../features/products/pages/groups/LifeStyle.jsx";
+import About from "../features/products/pages/user/About.jsx";
 
 const routes = createBrowserRouter([
   {
@@ -30,12 +33,24 @@ const routes = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/products/running",
+        path: "/products/Running",
         element: <Running />,
       },
       {
-        path: "/products/basketball",
+        path: "/products/Basketball",
         element: <Basketball />,
+      },
+      {
+        path: "/products/Lifestyle",
+        element: <LifeStyle />,
+      },
+      {
+        path: "/products/Training",
+        element: <Training />,
+      },
+      {
+        path: "/about",
+        element: <About />,
       },
       {
         path: "/product/:id",

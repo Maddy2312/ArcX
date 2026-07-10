@@ -26,7 +26,7 @@ const Nav = () => {
   const navLinks = [
     { label: "Home", to: "/" },
     { label: "Collection", to: "/" },
-    { label: "About", to: "/" },
+    { label: "About", to: "/about" },
   ];
 
   return (
