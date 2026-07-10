@@ -11,6 +11,7 @@ import Cart from "../features/cart/pages/Cart.jsx";
 import AppLayout from "./AppLayout.jsx";
 import Protected from "../features/products/pages/components/Protected.jsx";
 import Running from "../features/products/pages/groups/Running.jsx";
+import Basketball from "../features/products/pages/groups/Basketball.jsx";
 
 const routes = createBrowserRouter([
   {
@@ -29,8 +30,12 @@ const routes = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/running",
+        path: "/products/running",
         element: <Running />,
+      },
+      {
+        path: "/products/basketball",
+        element: <Basketball />,
       },
       {
         path: "/product/:id",

@@ -192,6 +192,7 @@ const Home = () => {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {categories.map((cat, i) => (
             <div
+            onClick={() => navigate(`/products/${cat.name}`)}
               key={i}
               className="group relative h-72 rounded-3xl overflow-hidden cursor-pointer bg-black/5 dark:bg-white/5"
             >
