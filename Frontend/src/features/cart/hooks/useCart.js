@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { addItemToCart , getCart} from "../services/cart.api.js";
+import { addItemToCart , createOrder, getCart} from "../services/cart.api.js";
 import { setCart } from "../state/cart.slice.js";
 
 const useCart = () => {
@@ -23,9 +23,19 @@ const useCart = () => {
             throw error;
         }
     };
+
+    const handleCreateOrder = async () => {
+        try {
+            const response = await createOrder();
+            return response;
+        } catch (error) {
+            throw error;
+        }
+    };
     return {
         handleAddToCart,
         handleGetCart,
+        handleCreateOrder,
     };
 };
 

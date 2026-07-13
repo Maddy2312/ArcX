@@ -27,3 +27,12 @@ export const getCart = async () => {
     throw error;
   }
 };
+
+export const createOrder = async () => {
+  try {
+    const response = await CartApiInstance.post("/payment/create/order");
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

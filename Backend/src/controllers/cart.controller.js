@@ -3,6 +3,7 @@ import { stockOfVariant } from "../dao/product.dao.js";
 import cartModel from "../models/cart.model.js";
 import paymentModel from "../models/payment.model.js";
 import productModel from "../models/product.model.js";
+import { createOrder } from "../services/payment.service.js";
 
 export const addToCart = async (req, res) => {
   try {
@@ -119,7 +120,7 @@ export const createOrderController = async (req, res) => {
         message: "Cart not found",
       });
     }
-    const order = await createOrderController({amount:cart.totalPrice ,currency:cart.currency});
+    const order = await createOrder({amount:cart.totalPrice ,currency:cart.currency});
     await paymentModel.create({
       user: req.user._id,
       price: {
