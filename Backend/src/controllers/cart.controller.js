@@ -1,6 +1,7 @@
 import { getCartDetails } from "../dao/cart.dao.js";
 import { stockOfVariant } from "../dao/product.dao.js";
 import cartModel from "../models/cart.model.js";
+import paymentModel from "../models/payment.model.js";
 import productModel from "../models/product.model.js";
 
 export const addToCart = async (req, res) => {
@@ -107,4 +108,53 @@ export const getCart = async(req,res)=>{
             message: error.message,
         });
     }
+}
+
+export const createOrderController = async (req, res) => {
+  try {
+    const cart = await getCartDetails(req.user._id);
+    if(!cart){
+      return res.status(404).json({
+        success: false,
+        message: "Cart not found",
+      });
+    }
+    const order = await createOrderController({amount:cart.totalPrice ,currency:cart.currency});
+    await paymentModel.create({
+      user: req.user._id,
+      price: {
+        amount: cart.totalPrice,
+        currency: cart.currency,
+      },
+      razorpay: {
+        orderId: order.id,
+      },
+      orderItems: cart.items.map((item)=>{
+        return {
+          title: item.product.name,
+          productId: item.product._id,
+          variantId: item.variant._id,
+          quantity: item.quantity,
+          price: {
+            amount: item.product.price.amount,
+            currency: item.product.price.currency,
+          },
+          description: item.product.description,
+          images: item.product.variants.images || item.product.images,
+        }
+      })
+    });
+    return res.status(200).json({
+      success: true,
+      message: "Order created successfully",
+      order,
+    });
+    
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
 }
