@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { addItemToCart , createOrder, getCart} from "../services/cart.api.js";
+import { addItemToCart , createOrder, getCart, verifyOrder} from "../services/cart.api.js";
 import { setCart } from "../state/cart.slice.js";
 
 const useCart = () => {
@@ -27,6 +27,14 @@ const useCart = () => {
     const handleCreateOrder = async () => {
         try {
             const response = await createOrder();
+            return response.order;
+        } catch (error) {
+            throw error;
+        }
+    };
+    const handleVerifyOrder = async ({razorpay_order_id,razorpay_payment_id,razorpay_signature}) => {
+        try {
+            const response = await verifyOrder({razorpay_order_id,razorpay_payment_id,razorpay_signature});
             return response;
         } catch (error) {
             throw error;
@@ -36,6 +44,7 @@ const useCart = () => {
         handleAddToCart,
         handleGetCart,
         handleCreateOrder,
+        handleVerifyOrder
     };
 };
 

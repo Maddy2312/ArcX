@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import useCart from "../hooks/useCart";
+import { useRazorpay, RazorpayOrderOptions } from "react-razorpay";
 import {
   ShoppingBag, Trash2, ArrowRight, ArrowLeft,
   Plus, Minus, Tag, Truck, ShieldCheck
@@ -8,14 +9,54 @@ import {
 import { useNavigate } from "react-router";
 
 const Cart = () => {
-  const { handleGetCart, handleUpdateCartQuantity, handleRemoveFromCart } = useCart();
+  const { handleGetCart, handleUpdateCartQuantity, handleRemoveFromCart, handleCreateOrder, handleVerifyOrder } = useCart();
   const navigate = useNavigate();
-
+  const user = useSelector((state) => state.auth);
   const { items = [], totalPrice, currency, loading, error } = useSelector((state) => state.cart);
 
   useEffect(() => {
     handleGetCart();
   }, []);
+
+  const { isLoading, Razorpay } = useRazorpay();
+
+  const handleCheckout = async () => {
+    try {
+      const order = await handleCreateOrder();
+      const options = {
+      key: "rzp_test_TCriJBS9uh82ew",
+      amount: order.amount, // Amount in paise
+      currency: order.currency,
+      name: "ArcX",
+      description: "Test Transaction",
+      order_id: order.id, // Generate order_id on server
+      handler: async (response) => {
+        const res = await handleVerifyOrder({
+          razorpay_order_id: response.razorpay_order_id,
+          razorpay_payment_id: response.razorpay_payment_id,
+          razorpay_signature: response.razorpay_signature,
+        })
+        if(res.success){
+          alert("Payment Successful!");
+          navigate(`/order-success?order_id=${response?.razorpay_order_id}`)
+        }
+      },
+      prefill: {
+        name: user?.name,
+        email: user?.email,
+        contact: user?.contact,
+      },
+      theme: {
+        color: "#F37254",
+      },
+    };
+
+    const razorpayInstance = new Razorpay(options);
+    razorpayInstance.open();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const adjustQuantity = async (itemId, currentQty, delta) => {
     const newQty = currentQty + delta;
@@ -225,7 +266,7 @@ const Cart = () => {
                   </button>
                 </div>
 
-                <button className="w-full bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-wider text-sm py-4 rounded-2xl flex justify-center items-center gap-2 hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-all duration-200 active:scale-[0.98] shadow-lg shadow-black/10 dark:shadow-white/10">
+                <button onClick={handleCheckout} className="w-full bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-wider text-sm py-4 rounded-2xl flex justify-center items-center gap-2 hover:bg-zinc-800 dark:hover:bg-zinc-100 transition-all duration-200 active:scale-[0.98] shadow-lg shadow-black/10 dark:shadow-white/10">
                   Checkout
                   <ArrowRight size={16} />
                 </button>

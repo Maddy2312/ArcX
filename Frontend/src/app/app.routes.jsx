@@ -15,6 +15,7 @@ import Basketball from "../features/products/pages/groups/Basketball.jsx";
 import Training from "../features/products/pages/groups/Training.jsx";
 import LifeStyle from "../features/products/pages/groups/LifeStyle.jsx";
 import About from "../features/products/pages/user/About.jsx";
+import OrderSuccess from "../features/cart/pages/OrderSuccess.jsx";
 
 const routes = createBrowserRouter([
   {
@@ -61,6 +62,14 @@ const routes = createBrowserRouter([
         element: (
           <Protected>
             <Cart />
+          </Protected>
+        ),
+      },
+      {
+        path: "/order-success",
+        element: (
+          <Protected>
+            <OrderSuccess />
           </Protected>
         ),
       },

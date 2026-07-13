@@ -36,3 +36,16 @@ export const createOrder = async () => {
     throw error;
   }
 };
+
+export const verifyOrder = async ({razorpay_order_id,razorpay_payment_id,razorpay_signature}) => {
+  try {
+    const response = await CartApiInstance.post("/payment/verify/order",{
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

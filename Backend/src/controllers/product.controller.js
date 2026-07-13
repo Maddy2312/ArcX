@@ -135,8 +135,6 @@ export const addVariants = async (req, res) => {
 export const addVariantSize = async (req, res) => {
   try {
     const { id, variantId } = req.params;
-    console.log(id, variantId);
-    console.log(req.body)
     const { sizeOfShoe, sizeStandard, stock } = req.body;
     const product = await productModel.findOne({
       _id: id,
