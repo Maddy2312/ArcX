@@ -126,11 +126,14 @@ const Home = () => {
             <div className="absolute w-[500px] h-[500px] rounded-full bg-black/[0.04] dark:bg-[#e9e9e9]/[0.04] border border-black/5 dark:border-white/5" />
             <div className="absolute w-[380px] h-[380px] rounded-full bg-black/[0.04] dark:bg-[#e9e9e9]/[0.04] border border-black/5 dark:border-white/5" />
 
+          {/* Blended Hero Image */}
+          <div className="relative flex items-center justify-center">
             <img
-              src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=90"
+              src="../public/image.png"
               alt="ArcX Featured Sneaker"
-              className="relative z-10 w-full max-w-[520px] object-contain drop-shadow-[0_40px_60px_rgba(0,0,0,0.2)] dark:drop-shadow-[0_40px_60px_rgba(255,255,255,0.1)] transform -rotate-12 hover:rotate-0 hover:scale-105 transition-all duration-700 ease-out"
+              className="relative z-10 w-full max-w-[520px] object-contain mix-blend-lighten opacity-90 drop-shadow-[0_20px_50px_rgba(255,255,255,0.1)] transform -rotate-12 hover:rotate-0 hover:scale-105 transition-all duration-700 ease-out"
             />
+          </div>
 
             {/* Floating stat cards */}
             <div className="absolute top-8 right-0 bg-[#e9e9e9] dark:bg-zinc-900 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3 shadow-xl shadow-black/5 dark:shadow-white/5">
