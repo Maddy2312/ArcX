@@ -129,7 +129,7 @@ const Home = () => {
           {/* Blended Hero Image */}
           <div className="relative flex items-center justify-center">
             <img
-              src="../public/image.png"
+              src="../public/assets/image.png"
               alt="ArcX Featured Sneaker"
               className="relative z-10 w-full max-w-[520px] object-contain mix-blend-lighten opacity-90 drop-shadow-[0_20px_50px_rgba(255,255,255,0.1)] transform -rotate-12 hover:rotate-0 hover:scale-105 transition-all duration-700 ease-out"
             />
