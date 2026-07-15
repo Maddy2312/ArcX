@@ -17,7 +17,7 @@ app.use(cors({
     credentials: true
 }));
 app.use(morgan("dev"));
-app.use("/public", express.static("./public"));
+app.use(express.static("./public"))
 
 app.use('/api/auth', authRouter);
 app.use('/api/products', productRouter);
